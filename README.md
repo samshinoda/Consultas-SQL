@@ -7,12 +7,15 @@
 Este proyecto consiste en resolver un conjunto de consultas SQL sobre una base de datos de películas, actores, clientes e inventario de alquileres. El objetivo es practicar y demostrar habilidades en consultas complejas, agregaciones, joins, subconsultas y manejo de tablas temporales.
 
 ## 2. Estructura del Proyecto
-🗂️ Estructura del Proyecto
-```
-├── esquema.sql         # Definición de tablas, relaciones y datos de ejemplo
-├── consultas.sql       # 64 consultas resueltas con comentarios en las más complejas
+├── esquema.sql         # Definición de tablas, relaciones y datos de ejemplo  
+├── consultas.sql       # 64 consultas resueltas con comentarios en las más complejas  
+├── diagrama.png        # Imagen del esquema de la base de datos  
 └── README.md           # Descripción del proyecto
-```
+
+### 🧩 Esquema de la Base de Datos
+A continuación se muestra el diagrama del modelo relacional usado en el análisis:
+
+![Esquema de la Base de Datos](./diagrama.png)
 
 ## 3. Instalación y Requisitos
 - PostgreSQL 
