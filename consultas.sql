@@ -17,8 +17,7 @@ WHERE a.actor_id BETWEEN 30 AND 40;
 SELECT
 	f.title AS titulo_pelicula
 FROM film f
-WHERE f.original_language_id IS NULL
-	OR f.original_language_id = f.language_id;
+WHERE f.original_language_id = f.language_id;
 
 -- 5. Ordena las películas por duración de forma ascendente.
 
@@ -33,7 +32,7 @@ ORDER BY f.length;
 SELECT
 	CONCAT(a.first_name, ' ', a.last_name) AS nombre_actor
 FROM actor a 
-WHERE a.last_name = 'ALLEN';
+WHERE a.last_name ILIKE 'ALLEN';
 
 /* 7. Encuentra la cantidad total de películas en cada clasificación de la tabla “film” 
 y muestra la clasificación junto con el recuento. */
@@ -76,8 +75,8 @@ SELECT
 FROM payment p 
 INNER JOIN rental r 
 	ON p.rental_id = r.rental_id
-ORDER BY r.rental_date DESC, r.rental_id DESC
-LIMIT 1 OFFSET 2; 
+ORDER BY r.rental_date DESC
+LIMIT 1 OFFSET 2;
 /* Usamos OFFSET 2 para saltar los dos primeros registros
    después de ordenar de forma descendente por fecha y ID, obteniendo así el antepenúltimo. */
 
@@ -166,7 +165,7 @@ HAVING AVG(f.length) > 110;
 
 -- 21. ¿Cuál es la media de duración del alquiler de las películas?
 
-SELECT AVG(r.return_date - r.rental_date) AS duracion
+SELECT AVG(EXTRACT(DAY FROM(r.return_date - r.rental_date))) AS duracion_alquiler
 FROM rental r;
 
 -- 22. Crea una columna con el nombre y apellidos de todos los actores y actrices.
@@ -177,11 +176,11 @@ FROM actor a;
 -- 23. Números de alquiler por día, ordenados por cantidad de alquiler de forma descendente.
 
 SELECT 
-	COUNT(*) AS cantidad_alquiler,
-	r.rental_date AS dia_alquiler
+    COUNT(*) AS cantidad_alquileres,
+    DATE(r.rental_date) AS dia_alquiler
 FROM rental r
-GROUP BY r.rental_date
-ORDER BY cantidad_alquiler DESC;
+GROUP BY DATE(r.rental_date)
+ORDER BY cantidad_alquileres DESC;
 
 -- 24. Encuentra las películas con una duración superior al promedio.
 
@@ -244,7 +243,7 @@ SELECT
 FROM film f
 LEFT JOIN inventory i 
 	ON i.film_id = f.film_id
-GROUP BY f.title;
+GROUP BY f.title, f.film_id;
 
 -- 30. Obtener los actores y el número de películas en las que ha actuado.
 
@@ -400,7 +399,7 @@ JOIN film_category fc
 	ON f.film_id = fc.film_id
 JOIN category c 
 	ON fc.category_id = c.category_id
-WHERE c."name" = 'Action';
+WHERE c.name = 'Action';
 
 -- 46. Encuentra todos los actores que no han participado en películas.
 
